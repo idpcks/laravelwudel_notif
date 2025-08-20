@@ -40,13 +40,29 @@ return [
     | WebPush Options
     |--------------------------------------------------------------------------
     |
-    | Configuration options for the WebPush library including TTL,
+    | Configuration options for the custom WebPush service including TTL,
     | urgency, and topic settings.
     |
     */
     'ttl' => env('WEBPUSH_TTL', 86400), // 24 hours in seconds
     'urgency' => env('WEBPUSH_URGENCY', 'normal'), // low, normal, high
     'topic' => env('WEBPUSH_TOPIC', null),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Service Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for the custom web push service implementation
+    | without external dependencies.
+    |
+    */
+    'custom_service' => [
+        'enabled' => env('WEBPUSH_CUSTOM_SERVICE', true),
+        'user_agent' => env('WEBPUSH_USER_AGENT', 'LaravelWudel-Notif/1.0'),
+        'timeout' => env('WEBPUSH_TIMEOUT', 30),
+        'connect_timeout' => env('WEBPUSH_CONNECT_TIMEOUT', 10),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -135,6 +151,20 @@ return [
         'connection' => env('WEBPUSH_DB_CONNECTION', null),
         'table' => 'push_subscriptions',
         'user_foreign_key' => 'user_id',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Model class names and namespaces for push notification
+    | functionality. These should not be changed unless you
+    | have a custom implementation.
+    |
+    */
+    'models' => [
+        'push_subscription' => \LaravelWudel\LaravelWudelNotif\Models\PushSubscription::class,
     ],
 
     /*

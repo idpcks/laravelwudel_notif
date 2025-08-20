@@ -148,7 +148,7 @@ class NotificationController extends Controller
             'status' => 'healthy',
             'timestamp' => now()->toISOString(),
             'package' => 'laravelwudel-notif',
-            'version' => '1.0.0'
+            'version' => '1.0.2'
         ]);
     }
 }

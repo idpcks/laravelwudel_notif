@@ -4,7 +4,7 @@
  * This library provides an easy way to integrate web push notifications
  * with Laravel applications using the LaravelWudel Notif package.
  * 
- * @version 1.0.0
+ * @version 1.0.2
  * @date 2025-08-20
  * @author LaravelWudel Team
  */

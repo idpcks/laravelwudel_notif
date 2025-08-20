@@ -1,7 +1,6 @@
 {
     "name": "laravelwudel/laravelwudel-notif",
-    "description": "A comprehensive Laravel package for web push notifications with VAPID support (Released August 2025)",
-    "version": "1.0.0",
+    "description": "A comprehensive Laravel package for web push notifications with VAPID support - 100% Custom Implementation, No External Dependencies",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -9,7 +8,11 @@
         "laravelwudel-notif",
         "web-push",
         "vapid",
-        "service-worker"
+        "service-worker",
+        "custom-implementation",
+        "no-dependencies",
+        "push-notifications",
+        "web-notifications"
     ],
     "authors": [
         {
@@ -20,7 +23,10 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0|^12.0",
+<<<<<<< HEAD
         "minishlink/web-push": "^8.0",
+=======
+>>>>>>> main
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
@@ -53,7 +59,13 @@
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "pint": "vendor/bin/pint",
-        "pint-test": "vendor/bin/pint --test"
+        "pint-test": "vendor/bin/pint --test",
+        "post-package-uninstall": [
+            "php scripts/uninstall-hook.php"
+        ],
+        "post-install-cmd": [
+            "LaravelWudel\\LaravelWudelNotif\\Console\\Commands\\PublishAssetsCommand::publishAssets"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -62,5 +74,10 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "homepage": "https://github.com/idpcks/laravelwudel_notif",
+    "support": {
+        "issues": "https://github.com/idpcks/laravelwudel_notif/issues",
+        "source": "https://github.com/idpcks/laravelwudel_notif"
+    }
 }
