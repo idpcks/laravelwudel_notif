@@ -22,6 +22,9 @@ class WebPushService
         ];
 
         $this->customWebPush = new CustomWebPushService();
+        
+        // Validate VAPID keys on construction
+        $this->validateVapidKeys();
     }
 
     /**
@@ -101,10 +104,45 @@ class WebPushService
      */
     public function getVapidKeys(): array
     {
+        if (!$this->validateVapidKeys()) {
+            throw new \RuntimeException('VAPID keys are not properly configured. Please run php artisan push:generate-vapid-keys');
+        }
+        
         return [
             'public_key' => $this->vapidKeys['VAPID']['publicKey'],
             'subject' => $this->vapidKeys['VAPID']['subject'],
         ];
+    }
+
+    /**
+     * Validate VAPID keys configuration
+     */
+    protected function validateVapidKeys(): bool
+    {
+        $subject = $this->vapidKeys['VAPID']['subject'];
+        $publicKey = $this->vapidKeys['VAPID']['publicKey'];
+        $privateKey = $this->vapidKeys['VAPID']['privateKey'];
+        
+        if (empty($subject) || empty($publicKey) || empty($privateKey)) {
+            return false;
+        }
+        
+        // Validate subject format (should be mailto:email@domain.com)
+        if (!preg_match('/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $subject)) {
+            return false;
+        }
+        
+        // Validate public key format (87 characters, base64)
+        if (!preg_match('/^[A-Za-z0-9_-]{87}$/', $publicKey)) {
+            return false;
+        }
+        
+        // Validate private key format (43 characters, base64)
+        if (!preg_match('/^[A-Za-z0-9_-]{43}$/', $privateKey)) {
+            return false;
+        }
+        
+        return true;
     }
 
     /**

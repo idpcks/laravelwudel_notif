@@ -61,6 +61,11 @@ class LaravelWudelNotifServiceProvider extends ServiceProvider
             ]);
         }
 
+        // Check VAPID configuration in non-console environment
+        if (!$this->app->runningInConsole()) {
+            $this->checkVapidConfiguration();
+        }
+
         // Ensure models are accessible
         $this->ensureModelAccessibility();
 
@@ -87,6 +92,31 @@ class LaravelWudelNotifServiceProvider extends ServiceProvider
                 \LaravelWudel\LaravelWudelNotif\Models\PushSubscription::class,
                 'PushSubscriptionModel'
             );
+        }
+    }
+
+    /**
+     * Check VAPID configuration and provide helpful error messages
+     */
+    protected function checkVapidConfiguration(): void
+    {
+        $vapidConfig = config('laravelwudel-notif.vapid');
+        
+        if (empty($vapidConfig['subject']) || empty($vapidConfig['public_key']) || empty($vapidConfig['private_key'])) {
+            // Log warning about missing VAPID configuration
+            \Illuminate\Support\Facades\Log::warning('LaravelWudel Notif: VAPID keys are not configured. Please run php artisan push:generate-vapid-keys');
+            
+            // In development environment, show more detailed error
+            if (config('app.debug')) {
+                throw new \RuntimeException(
+                    'LaravelWudel Notif: VAPID keys are not configured. ' .
+                    'Please run: php artisan push:generate-vapid-keys ' .
+                    'or add the following to your .env file:' . PHP_EOL .
+                    'WEBPUSH_VAPID_SUBJECT=mailto:your-email@example.com' . PHP_EOL .
+                    'WEBPUSH_VAPID_PUBLIC_KEY=your_public_key_here' . PHP_EOL .
+                    'WEBPUSH_VAPID_PRIVATE_KEY=your_private_key_here'
+                );
+            }
         }
     }
 }

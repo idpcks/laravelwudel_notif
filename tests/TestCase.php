@@ -24,10 +24,10 @@ abstract class TestCase extends Orchestra
             'prefix'   => '',
         ]);
 
-        // Setup VAPID keys for testing
+        // Setup VAPID keys for testing (using valid format)
         $app['config']->set('laravelwudel-notif.vapid.subject', 'mailto:test@example.com');
-        $app['config']->set('laravelwudel-notif.vapid.public_key', 'test_public_key');
-        $app['config']->set('laravelwudel-notif.vapid.private_key', 'test_private_key');
+        $app['config']->set('laravelwudel-notif.vapid.public_key', 'test_public_key_87_chars_long_for_testing_purposes_only_123456789');
+        $app['config']->set('laravelwudel-notif.vapid.private_key', 'test_private_key_43_chars_long_for_testing_123456789');
     }
 
     /**

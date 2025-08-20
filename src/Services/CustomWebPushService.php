@@ -216,6 +216,11 @@ class CustomWebPushService
             return false;
         }
         
+        // Validate subject format (should be mailto:email@domain.com)
+        if (!preg_match('/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $subject)) {
+            return false;
+        }
+        
         // Basic validation - check if keys are in correct format
         if (!preg_match('/^[A-Za-z0-9_-]{87}$/', $publicKey)) {
             return false;

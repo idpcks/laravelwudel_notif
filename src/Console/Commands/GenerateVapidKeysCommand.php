@@ -27,6 +27,10 @@ class GenerateVapidKeysCommand extends Command
                 $this->info('Operation cancelled.');
                 return 0;
             }
+        } else {
+            $this->warn('⚠️  No valid VAPID keys found in your .env file.');
+            $this->line('This package requires VAPID keys to function properly.');
+            $this->line('Generating new keys now...');
         }
 
         try {

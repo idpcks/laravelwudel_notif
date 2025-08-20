@@ -50,6 +50,8 @@ php artisan push:generate-vapid-keys
 
 ### Environment Variables
 
+**⚠️ IMPORTANT: VAPID keys are required for this package to function.**
+
 Tambahkan ke file `.env`:
 
 ```env
@@ -57,6 +59,12 @@ WEBPUSH_VAPID_SUBJECT=mailto:your-email@example.com
 WEBPUSH_VAPID_PUBLIC_KEY=your_public_key_here
 WEBPUSH_VAPID_PRIVATE_KEY=your_private_key_here
 ```
+
+**Note:** 
+- `WEBPUSH_VAPID_SUBJECT` harus dalam format `mailto:email@domain.com`
+- `WEBPUSH_VAPID_PUBLIC_KEY` harus 87 karakter (base64)
+- `WEBPUSH_VAPID_PRIVATE_KEY` harus 43 karakter (base64)
+- Jika keys tidak dikonfigurasi, package akan error dan memberikan pesan yang jelas
 
 ### Config File
 

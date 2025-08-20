@@ -103,6 +103,8 @@ WEBPUSH_VAPID_PRIVATE_KEY=your_private_key_here
 
 ### Required Environment Variables
 
+**⚠️ CRITICAL: VAPID keys are required for this package to function properly.**
+
 ```env
 # VAPID Configuration
 WEBPUSH_VAPID_SUBJECT=mailto:your-email@example.com
@@ -116,6 +118,16 @@ WEBPUSH_LOGGING=true
 WEBPUSH_AUTO_CLEANUP=false
 WEBPUSH_QUEUE_ENABLED=false
 ```
+
+**VAPID Key Requirements:**
+- `WEBPUSH_VAPID_SUBJECT`: Must be in format `mailto:email@domain.com`
+- `WEBPUSH_VAPID_PUBLIC_KEY`: Must be exactly 87 characters (base64 encoded)
+- `WEBPUSH_VAPID_PRIVATE_KEY`: Must be exactly 43 characters (base64 encoded)
+
+**What happens if keys are missing:**
+- Package will throw clear error messages
+- In development mode: Detailed error with setup instructions
+- In production mode: Warning logs and graceful degradation
 
 ### Configuration File
 
