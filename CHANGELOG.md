@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2025-01-27
+
+### Fixed
+- VAPID key generation command now properly checks for existing keys
+- Improved error handling and debugging for OpenSSL issues
+- Added comprehensive troubleshooting guide for VAPID key generation
+- Fixed false positive detection of existing VAPID keys
+
+### Changed
+- Enhanced OpenSSL validation and curve support checking
+- Better error messages with specific troubleshooting steps
+- Improved command output with progress indicators
+
 ## [1.0.1] - 2025-01-27
 
 ### Added
