@@ -1,6 +1,7 @@
 {
     "name": "laravelwudel/laravelwudel-notif",
     "description": "A comprehensive Laravel package for web push notifications with VAPID support (Released August 2025)",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -12,8 +13,8 @@
     ],
     "authors": [
         {
-            "name": "MASDEN SOLO DEVELOPMENT",
-            "email": "mail.idpcks@gmail.com"
+            "name": "MASDEN DEV",
+            "email": "mail.idpcks.woop@gmail.com"
         }
     ],
     "require": {

@@ -35,4 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Support
 
-For issues and questions, please create an issue in the repository or contact the LaravelWudel team.
+For issues and questions, please create an issue in the [GitHub repository](https://github.com/idpcks/laravelwudel_notif) or contact the LaravelWudel team.
+
+## Links
+
+- **GitHub Repository**: [https://github.com/idpcks/laravelwudel_notif](https://github.com/idpcks/laravelwudel_notif)
+- **Packagist Package**: [https://packagist.org/packages/laravelwudel/laravelwudel-notif](https://packagist.org/packages/laravelwudel/laravelwudel-notif)

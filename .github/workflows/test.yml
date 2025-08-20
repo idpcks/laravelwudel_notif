@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php: [8.2, 8.3]
+        laravel: [11.*, 12.*]
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+          coverage: none
+          
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction
+        
+      - name: Run tests
+        run: composer test
+        
+      - name: Run Pint
+        run: composer pint-test

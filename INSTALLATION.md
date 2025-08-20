@@ -249,8 +249,13 @@ For issues and questions:
 
 - Check the [README.md](README.md) for usage examples
 - Review [examples/basic-usage.php](examples/basic-usage.php)
-- Create an issue in the repository
+- Create an issue in the [GitHub repository](https://github.com/idpcks/laravelwudel_notif)
 - Check Laravel documentation for general guidance
+
+## Repository & Links
+
+- **GitHub Repository**: [https://github.com/idpcks/laravelwudel_notif](https://github.com/idpcks/laravelwudel_notif)
+- **Packagist Package**: [https://packagist.org/packages/laravelwudel/laravelwudel-notif](https://packagist.org/packages/laravelwudel/laravelwudel-notif)
 
 ## Next Steps
 

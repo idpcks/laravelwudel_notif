@@ -196,6 +196,11 @@ composer test
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
+## Repository & Links
+
+- **GitHub Repository**: [https://github.com/idpcks/laravelwudel_notif](https://github.com/idpcks/laravelwudel_notif)
+- **Packagist Package**: [https://packagist.org/packages/laravelwudel/laravelwudel-notif](https://packagist.org/packages/laravelwudel/laravelwudel-notif)
+
 ## Support
 
-Untuk dukungan, silakan buat issue di repository ini atau hubungi tim LaravelWudel.
+Untuk dukungan, silakan buat issue di [repository GitHub](https://github.com/idpcks/laravelwudel_notif) atau hubungi tim LaravelWudel.
