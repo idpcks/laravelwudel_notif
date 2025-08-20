@@ -7,7 +7,8 @@ Package Laravel yang komprehensif untuk web push notifications dengan dukungan V
 ## Fitur
 
 - ✅ Dukungan Laravel 11 & 12
-- ✅ Web Push Notifications dengan VAPID
+- ✅ Web Push Notifications dengan VAPID (Custom Implementation)
+- ✅ **100% Custom Code** - Tidak bergantung pada library eksternal
 - ✅ Service Provider auto-discovery
 - ✅ Facade untuk kemudahan penggunaan
 - ✅ Model dan Migration yang fleksibel
@@ -15,6 +16,7 @@ Package Laravel yang komprehensif untuk web push notifications dengan dukungan V
 - ✅ Error handling yang robust
 - ✅ Logging yang detail
 - ✅ Testing support
+- ✅ **Branding Sendiri** - LaravelWudel Notif
 
 ## Instalasi
 
@@ -202,6 +204,33 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 - **GitHub Repository**: [https://github.com/idpcks/laravelwudel_notif](https://github.com/idpcks/laravelwudel_notif)
 - **Packagist Package**: [https://packagist.org/packages/laravelwudel/laravelwudel-notif](https://packagist.org/packages/laravelwudel/laravelwudel-notif)
+
+## Installation via Composer
+
+Package ini sudah tersedia di Packagist dan dapat diinstall dengan mudah:
+
+```bash
+composer require laravelwudel/laravelwudel-notif
+```
+
+## 🚀 Custom Implementation
+
+Package ini menggunakan **100% custom implementation** tanpa bergantung pada library eksternal seperti `minishlink/web-push`. Semua fitur web push notification diimplementasikan dari awal menggunakan:
+
+- **Custom VAPID Key Generation** - Generate keys menggunakan OpenSSL
+- **Custom Web Push Service** - Implementasi lengkap web push protocol
+- **Custom JWT Signing** - ECDSA signing untuk VAPID authentication
+- **Custom HTTP Client** - Menggunakan Guzzle untuk HTTP requests
+- **Custom Error Handling** - Error handling yang robust dan customizable
+
+### Keuntungan Custom Implementation:
+
+✅ **Branding Sendiri** - Tidak ada dependency eksternal  
+✅ **Full Control** - Kontrol penuh atas semua fitur  
+✅ **Performance** - Optimized untuk kebutuhan spesifik  
+✅ **Security** - Implementasi security yang dapat diaudit  
+✅ **Maintenance** - Tidak bergantung pada update library lain  
+✅ **Customization** - Mudah disesuaikan dengan kebutuhan
 
 ## Support
 

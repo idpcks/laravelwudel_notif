@@ -5,13 +5,10 @@ namespace LaravelWudel\LaravelWudelNotif\Services;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use LaravelWudel\LaravelWudelNotif\Models\PushSubscription;
-use Minishlink\WebPush\WebPush;
-use Minishlink\WebPush\Subscription;
-use Minishlink\WebPush\Message;
 
 class WebPushService
 {
-    protected WebPush $webPush;
+    protected CustomWebPushService $customWebPush;
     protected array $vapidKeys;
 
     public function __construct()
@@ -24,14 +21,7 @@ class WebPushService
             ],
         ];
 
-        $this->webPush = new WebPush($this->vapidKeys);
-        
-        // Configure options
-        $this->webPush->setDefaultOptions([
-            'TTL' => config('laravelwudel-notif.ttl', 86400),
-            'urgency' => config('laravelwudel-notif.urgency', 'normal'),
-            'topic' => config('laravelwudel-notif.topic', null),
-        ]);
+        $this->customWebPush = new CustomWebPushService();
     }
 
     /**
@@ -147,33 +137,10 @@ class WebPushService
     protected function sendToSubscription(PushSubscription $subscription, string $payload): bool
     {
         try {
-            $pushSubscription = Subscription::create([
-                'endpoint' => $subscription->endpoint,
-                'keys' => [
-                    'p256dh' => $subscription->p256dh,
-                    'auth' => $subscription->auth,
-                ],
-            ]);
-
-            $message = new Message($payload, [
-                'TTL' => config('laravelwudel-notif.ttl', 86400),
-                'urgency' => config('laravelwudel-notif.urgency', 'normal'),
-            ]);
-
-            $report = $this->webPush->sendOneNotification($pushSubscription, $message);
-
-            if ($report->isSuccess()) {
-                return true;
-            }
-
-            // Handle failed delivery
-            if ($report->isSubscriptionExpired()) {
-                $subscription->delete();
-                Log::info('Deleted expired subscription', ['subscription_id' => $subscription->id]);
-            }
-
-            return false;
-
+            $payloadData = json_decode($payload, true);
+            
+            return $this->customWebPush->sendToSubscription($subscription, $payloadData);
+            
         } catch (\Exception $e) {
             Log::error('Failed to send push notification', [
                 'subscription_id' => $subscription->id,

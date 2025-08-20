@@ -1,6 +1,6 @@
 {
     "name": "laravelwudel/laravelwudel-notif",
-    "description": "A comprehensive Laravel package for web push notifications with VAPID support (Released August 2025)",
+    "description": "A comprehensive Laravel package for web push notifications with VAPID support - 100% Custom Implementation, No External Dependencies (Released August 2025)",
     "version": "1.0.0",
     "type": "library",
     "license": "MIT",
@@ -9,7 +9,11 @@
         "laravelwudel-notif",
         "web-push",
         "vapid",
-        "service-worker"
+        "service-worker",
+        "custom-implementation",
+        "no-dependencies",
+        "push-notifications",
+        "web-notifications"
     ],
     "authors": [
         {
@@ -20,7 +24,6 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0|^12.0",
-        "minishlink/web-push": "^8.0",
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
@@ -62,5 +65,10 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "homepage": "https://github.com/idpcks/laravelwudel_notif",
+    "support": {
+        "issues": "https://github.com/idpcks/laravelwudel_notif/issues",
+        "source": "https://github.com/idpcks/laravelwudel_notif"
+    }
 }
