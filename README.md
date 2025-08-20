@@ -19,6 +19,7 @@ Package Laravel yang komprehensif untuk web push notifications dengan dukungan V
 - ✅ Logging yang detail
 - ✅ Testing support
 - ✅ **Branding Sendiri** - LaravelWudel Notif
+- ✅ **OpenSSL 3.0+ Compatibility** - Fallback methods for stricter security policies
 
 ## Instalasi
 
@@ -183,6 +184,8 @@ self.addEventListener('push', function(event) {
 ```bash
 php artisan push:generate-vapid-keys
 ```
+
+**🔧 OpenSSL 3.0+ Compatibility:** The package automatically detects OpenSSL 3.0+ and uses fallback methods if standard VAPID key generation fails due to stricter security policies.
 
 ### Cleanup Old Subscriptions
 

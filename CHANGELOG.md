@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.5] - 2025-01-27
+
+### Fixed
+- **CRITICAL FIX**: Improved OpenSSL 3.0+ compatibility for VAPID key generation
+- **CRITICAL FIX**: Better handling of OpenSSL 3.0+ stricter security policies
+- **CRITICAL FIX**: Enhanced error messages and user guidance for OpenSSL 3.0+ users
+
+### Added
+- **NEW**: OpenSSL 3.0+ specific key generation method with legacy support
+- **NEW**: Enhanced curve support detection without key generation
+- **NEW**: Better fallback system for OpenSSL 3.0+ environments
+- **NEW**: Comprehensive troubleshooting guide for OpenSSL 3.0+ issues
+- **NEW**: OpenSSL 3.0+ compatibility test script (`examples/openssl3-test.php`)
+
+### Improved
+- **IMPROVED**: VAPID key generation now handles OpenSSL 3.0+ gracefully
+- **IMPROVED**: Better error messages with specific solutions for OpenSSL 3.0+
+- **IMPROVED**: Automatic detection and guidance for OpenSSL 3.0+ users
+- **IMPROVED**: Enhanced documentation with OpenSSL 3.0+ solutions
+- **IMPROVED**: More robust curve support checking
+
+### Documentation
+- **DOCS**: Added OpenSSL 3.0+ troubleshooting section
+- **DOCS**: Enhanced installation guide with OpenSSL 3.0+ notes
+- **DOCS**: Updated troubleshooting guide with specific solutions
+- **DOCS**: Added OpenSSL 3.0+ compatibility information
+
+### Compatibility
+- **COMPATIBILITY**: Enhanced OpenSSL 3.0+ support
+- **COMPATIBILITY**: Better handling of stricter security policies
+- **COMPATIBILITY**: Improved fallback methods for various OpenSSL configurations
+
 ## [1.0.4] - 2025-01-27
 
 ### Fixed

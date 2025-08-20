@@ -8,6 +8,8 @@
 - Laravel 11 or 12
 - Composer
 - SSL certificate (required for production)
+- **OpenSSL Extension**: Required for VAPID key generation
+  - **Note for OpenSSL 3.0+ users**: The package includes fallback methods for stricter security policies
 
 ## Step 1: Install Package
 
@@ -277,6 +279,53 @@ php artisan push:generate-vapid-keys --force
 # WEBPUSH_VAPID_PUBLIC_KEY=...
 # WEBPUSH_VAPID_PRIVATE_KEY=...
 ```
+
+#### Error: "OpenSSL does not support required elliptic curves" (OpenSSL 3.0+)
+
+This error commonly occurs with OpenSSL 3.0+ due to stricter security policies.
+
+**Check your OpenSSL version:**
+```bash
+php -r "echo OPENSSL_VERSION_TEXT;"
+```
+
+**For OpenSSL 3.0+ users:**
+
+1. **The package will automatically try alternative methods** - let it continue
+2. **If generation still fails, try these solutions:**
+
+**Solution 1: Enable legacy algorithms in OpenSSL config**
+```bash
+# Find your OpenSSL config file
+openssl version -d
+
+# Edit the config file and add:
+openssl_conf = default_conf
+
+[default_conf]
+providers = default
+alg_section = algorithm_sect
+
+[algorithm_section]
+legacy = legacy
+```
+
+**Solution 2: Set environment variable**
+```bash
+export OPENSSL_CONF=/path/to/your/openssl.cnf
+```
+
+**Solution 3: For system administrators**
+- Install OpenSSL with legacy provider support
+- Configure security policies to allow required curves
+- Contact your hosting provider if using shared hosting
+
+**Solution 4: Alternative approaches**
+- Use the package's fallback methods (sodium-based generation)
+- Generate keys on a different system and copy them over
+- Use pre-generated VAPID keys from a trusted source
+
+**Note:** The package automatically detects OpenSSL 3.0+ and will attempt multiple fallback methods. If all methods fail, it will provide detailed error messages and suggestions.
 
 ### Debug Mode
 

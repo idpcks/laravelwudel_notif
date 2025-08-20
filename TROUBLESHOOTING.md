@@ -139,7 +139,61 @@ OpenSSL configuration issues or insufficient permissions.
    php artisan push:generate-vapid-keys --force
    ```
 
-### 6. Service Provider Not Found
+### 6. OpenSSL 3.0+ VAPID Key Generation Issues
+
+**Error:**
+```
+OpenSSL does not support curve: P-256 (prime256v1)
+OpenSSL does not support required elliptic curves.
+```
+
+**Cause:**
+OpenSSL 3.0+ has stricter security policies and may disable certain elliptic curves by default.
+
+**Solution:**
+1. **Check OpenSSL version:**
+   ```bash
+   php -r "echo OPENSSL_VERSION_TEXT;"
+   ```
+
+2. **For OpenSSL 3.0+ users:**
+   - The package will automatically try alternative methods
+   - If generation fails, try these solutions:
+
+3. **Enable legacy algorithms in OpenSSL config:**
+   ```bash
+   # Find your OpenSSL config file
+   openssl version -d
+   
+   # Edit the config file and add:
+   openssl_conf = default_conf
+   
+   [default_conf]
+   providers = default
+   alg_section = algorithm_sect
+   
+   [algorithm_sect]
+   legacy = legacy
+   ```
+
+4. **Set environment variable:**
+   ```bash
+   export OPENSSL_CONF=/path/to/your/openssl.cnf
+   ```
+
+5. **For system administrators:**
+   - Install OpenSSL with legacy provider support
+   - Configure security policies to allow required curves
+   - Contact your hosting provider if using shared hosting
+
+6. **Alternative solution:**
+   - Use the package's fallback methods (sodium-based generation)
+   - Generate keys on a different system and copy them over
+   - Use pre-generated VAPID keys from a trusted source
+
+**Note:** The package automatically detects OpenSSL 3.0+ and will attempt multiple fallback methods. If all methods fail, it will provide detailed error messages and suggestions.
+
+### 7. Service Provider Not Found
 
 **Error:**
 ```
