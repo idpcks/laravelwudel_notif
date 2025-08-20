@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2025-01-27
+
+### Fixed
+- **CRITICAL FIX**: Resolved VAPID Keys Generator error on OpenSSL 3.0+
+- **CRITICAL FIX**: Fixed "Call to undefined function openssl_ec_curve_nist_method()" error
+- **CRITICAL FIX**: Fixed compatibility issues with Windows OpenSSL 3.0+
+
+### Added
+- **NEW**: Multiple fallback methods for VAPID key generation
+- **NEW**: Sodium-based key generation as primary method (Method 5)
+- **NEW**: 6 comprehensive fallback methods for maximum compatibility
+- **NEW**: Cross-platform support (Windows, Linux, macOS)
+- **NEW**: Comprehensive error handling and user feedback
+- **NEW**: OpenSSL configuration file detection
+
+### Improved
+- **IMPROVED**: VAPID key generation now works on all OpenSSL versions
+- **IMPROVED**: Better error messages and debugging information
+- **IMPROVED**: Sequential fallback system for maximum success rate
+- **IMPROVED**: User-friendly progress feedback during key generation
+- **IMPROVED**: Production-ready implementation with security best practices
+
+### Compatibility
+- **COMPATIBILITY**: OpenSSL 1.1.x (all methods)
+- **COMPATIBILITY**: OpenSSL 3.0+ (sodium-based method)
+- **COMPATIBILITY**: Windows 10/11 with OpenSSL 3.0+
+- **COMPATIBILITY**: PHP 7.4+ with sodium extension
+- **COMPATIBILITY**: Laravel 8+ framework versions
+
+### Security
+- **SECURITY**: Sodium-based key generation for cryptographic security
+- **SECURITY**: Memory cleanup after key generation
+- **SECURITY**: Secure random key generation
+- **SECURITY**: Production-ready VAPID key implementation
+
+## [1.0.3] - 2025-01-27
+
 ## [1.0.3] - 2025-01-27
 
 ### Fixed
