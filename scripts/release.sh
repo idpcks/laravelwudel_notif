@@ -3,6 +3,15 @@
 # Script untuk auto-release package Laravel
 # Usage: ./scripts/release.sh [patch|minor|major]
 
+# Check if we're on main branch
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" != "main" ]; then
+    echo "Error: This script must be run from the main branch!"
+    echo "Current branch: $CURRENT_BRANCH"
+    echo "Please checkout to main branch first: git checkout main"
+    exit 1
+fi
+
 set -e
 
 # Check if version type is provided

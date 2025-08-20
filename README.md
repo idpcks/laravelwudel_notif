@@ -187,10 +187,12 @@ composer test
 ## Contributing
 
 1. Fork repository
-2. Create feature branch
+2. Create feature branch from `main`
 3. Commit changes
-4. Push to branch
-5. Create Pull Request
+4. Push to feature branch
+5. Create Pull Request to `main` branch
+
+**Important:** All releases and tags must be created from the `main` branch to ensure Packagist gets the stable version.
 
 ## License
 

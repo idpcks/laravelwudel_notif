@@ -2,6 +2,16 @@
 REM Script untuk auto-release package Laravel (Windows)
 REM Usage: release.bat [patch|minor|major]
 
+REM Check if we're on main branch
+for /f "tokens=2" %%i in ('git branch --show-current') do set CURRENT_BRANCH=%%i
+if not "%CURRENT_BRANCH%"=="main" (
+    echo Error: This script must be run from the main branch!
+    echo Current branch: %CURRENT_BRANCH%
+    echo Please checkout to main branch first: git checkout main
+    pause
+    exit /b 1
+)
+
 setlocal enabledelayedexpansion
 
 REM Check if version type is provided
