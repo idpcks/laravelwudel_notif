@@ -1,52 +1,63 @@
 # Changelog
 
-All notable changes to the `laravelwudel/laravelwudel-notif` package will be documented in this file.
+All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [1.0.3] - 2025-01-27
 
-## [Unreleased]
+### Fixed
+- **CRITICAL FIX**: Resolved fatal error during package uninstall
+- **CRITICAL FIX**: Fixed "Service Provider Tidak Ditemukan" error
+- **CRITICAL FIX**: Fixed cache corruption after uninstall
+- **CRITICAL FIX**: Fixed Laravel application crash after package removal
+
+### Added
+- **NEW**: Automatic uninstall hook via composer `post-package-uninstall`
+- **NEW**: `UninstallCommand` for manual package cleanup
+- **NEW**: `EmergencyCleanupCommand` for critical cache corruption
+- **NEW**: `CacheCleanupService` for robust cache management
+- **NEW**: Uninstall scripts for Windows (`uninstall.bat`) and Unix (`uninstall.sh`)
+- **NEW**: Comprehensive uninstall documentation (`UNINSTALL.md`)
+- **NEW**: Automatic cache cleanup during uninstall
+- **NEW**: Cache integrity validation
+- **NEW**: Emergency cache reset functionality
+
+### Improved
+- **IMPROVED**: Service provider now handles uninstall gracefully
+- **IMPROVED**: Cache management is now robust and automatic
+- **IMPROVED**: Uninstall process is now foolproof
+- **IMPROVED**: Error handling during uninstall
+- **IMPROVED**: Documentation for troubleshooting uninstall issues
+
+### Security
+- **SECURITY**: Package now safely removes all traces during uninstall
+- **SECURITY**: No more orphaned cache references
+- **SECURITY**: Clean service provider removal
 
 ## [1.0.2] - 2025-01-27
 
-### Fixed
-- VAPID key generation command now properly checks for existing keys
-- Improved error handling and debugging for OpenSSL issues
-- Added comprehensive troubleshooting guide for VAPID key generation
-- Fixed false positive detection of existing VAPID keys
+### Added
+- Initial release with web push notification features
+- VAPID support
+- Service worker integration
+- Queue support for mass notifications
+- Comprehensive testing suite
 
-### Changed
-- Enhanced OpenSSL validation and curve support checking
-- Better error messages with specific troubleshooting steps
-- Improved command output with progress indicators
+### Known Issues
+- **CRITICAL**: Package uninstall causes fatal Laravel errors
+- **CRITICAL**: Cache corruption after uninstall
+- **CRITICAL**: Service provider not found errors
+- **CRITICAL**: Manual cleanup required for proper uninstall
 
-## [1.0.1] - 2025-01-27
+## [1.0.1] - 2025-01-20
 
 ### Added
-- Bug fixes and improvements
-- Enhanced error handling
-- Performance optimizations
-
-### Changed
-- Package stability improvements
-- Documentation updates
-
-## [1.0.0] - 2025-08-20
-
-### Added
-- Initial release
-- Basic push notification functionality
+- Basic web push notification functionality
 - VAPID key generation
-- Subscription management
-- Notification sending to users, topics, and all users
-- Package published to Packagist.org
-- Composer installation support
+- Service worker implementation
 
-## Support
+## [1.0.0] - 2025-01-15
 
-For issues and questions, please create an issue in the [GitHub repository](https://github.com/idpcks/laravelwudel_notif) or contact the LaravelWudel team.
-
-## Links
-
-- **GitHub Repository**: [https://github.com/idpcks/laravelwudel_notif](https://github.com/idpcks/laravelwudel_notif)
-- **Packagist Package**: [https://packagist.org/packages/laravelwudel/laravelwudel-notif](https://packagist.org/packages/laravelwudel/laravelwudel-notif)
+### Added
+- Initial package structure
+- Basic notification service
+- Configuration files

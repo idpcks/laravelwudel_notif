@@ -1,7 +1,7 @@
 {
     "name": "laravelwudel/laravelwudel-notif",
     "description": "A comprehensive Laravel package for web push notifications with VAPID support - 100% Custom Implementation, No External Dependencies (Released August 2025)",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -56,7 +56,13 @@
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "pint": "vendor/bin/pint",
-        "pint-test": "vendor/bin/pint --test"
+        "pint-test": "vendor/bin/pint --test",
+        "post-package-uninstall": [
+            "php scripts/uninstall-hook.php"
+        ],
+        "post-install-cmd": [
+            "LaravelWudel\\LaravelWudelNotif\\Console\\Commands\\PublishAssetsCommand::publishAssets"
+        ]
     },
     "config": {
         "sort-packages": true,

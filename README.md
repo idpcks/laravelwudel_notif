@@ -186,6 +186,138 @@ php artisan push:cleanup-subscriptions
 composer test
 ```
 
+## Uninstall Instructions
+
+**📖 For detailed uninstall guide, see [UNINSTALL.md](UNINSTALL.md)**
+
+### Automatic Uninstall (Recommended)
+
+Package ini menyediakan uninstall otomatis yang akan membersihkan semua file dan cache secara otomatis:
+
+```bash
+# Uninstall via Composer (akan menjalankan cleanup otomatis)
+composer remove laravelwudel/laravelwudel-notif
+
+# Atau jalankan command uninstall manual
+php artisan laravelwudel-notif:uninstall
+```
+
+### Manual Uninstall (Jika Automatic Gagal)
+
+Jika uninstall otomatis gagal, ikuti langkah manual berikut:
+
+#### 1. Hapus Package dari Composer
+```bash
+composer remove laravelwudel/laravelwudel-notif
+```
+
+#### 2. Hapus File Konfigurasi
+```bash
+rm config/laravelwudel-notif.php
+```
+
+#### 3. Hapus Migration (Jika Sudah Dijalankan)
+```bash
+# Rollback migration terlebih dahulu
+php artisan migrate:rollback --step=1
+
+# Hapus file migration
+rm database/migrations/*_create_push_subscriptions_table.php
+```
+
+#### 4. Hapus Model (Jika Sudah Di-publish)
+```bash
+rm app/Models/PushSubscription.php
+```
+
+#### 5. Hapus Views dan Assets (Jika Sudah Di-publish)
+```bash
+rm -rf resources/views/vendor/laravelwudel-notif
+rm -rf public/vendor/laravelwudel-notif
+```
+
+#### 6. Bersihkan Cache Laravel
+```bash
+# Clear semua cache
+php artisan optimize:clear
+
+# Atau hapus cache secara manual jika command gagal
+rm -rf bootstrap/cache/*
+```
+
+#### 7. Rebuild Autoload
+```bash
+composer dump-autoload
+```
+
+### Troubleshooting Uninstall Issues
+
+#### Error: Service Provider Tidak Ditemukan
+Jika mengalami error "Service Provider Tidak Ditemukan" setelah uninstall:
+
+```bash
+# Hapus semua cache Laravel
+rm -rf bootstrap/cache/*
+
+# Clear compiled classes
+php artisan clear-compiled
+
+# Rebuild autoload
+composer dump-autoload
+
+# Clear semua cache
+php artisan optimize:clear
+```
+
+#### Error: Cache Corruption
+Jika cache Laravel menjadi corrupt:
+
+```bash
+# Hapus semua cache
+rm -rf bootstrap/cache/*
+
+# Install ulang dependencies
+composer install
+
+# Clear dan rebuild cache
+php artisan optimize:clear
+```
+
+#### Emergency Cleanup Script
+Jika semua cara di atas gagal, gunakan script emergency cleanup:
+
+```bash
+# Jalankan emergency cleanup
+php artisan laravelwudel-notif:uninstall --force
+
+# Atau hapus semua cache secara manual
+rm -rf bootstrap/cache/*
+composer install
+php artisan optimize:clear
+```
+
+### Post-Uninstall Checklist
+
+Setelah uninstall, pastikan:
+
+- [ ] Package sudah dihapus dari `composer.json`
+- [ ] File konfigurasi sudah dihapus
+- [ ] Migration sudah di-rollback dan dihapus
+- [ ] Model sudah dihapus
+- [ ] Views dan assets sudah dihapus
+- [ ] Cache Laravel sudah dibersihkan
+- [ ] Autoload sudah di-rebuild
+- [ ] Aplikasi Laravel bisa dijalankan normal
+
+### Support untuk Uninstall Issues
+
+Jika mengalami masalah saat uninstall:
+
+1. **Buat Issue** di [GitHub Repository](https://github.com/idpcks/laravelwudel_notif)
+2. **Jelaskan Error** yang terjadi dengan detail
+3. **Lampirkan Log** error jika ada
+4. **Sebutkan Versi** Laravel dan PHP yang digunakan
+
 ## Contributing
 
 1. Fork repository

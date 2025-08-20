@@ -8,6 +8,8 @@ use LaravelWudel\LaravelWudelNotif\Services\WebPushService;
 use LaravelWudel\LaravelWudelNotif\Console\Commands\GenerateVapidKeysCommand;
 use LaravelWudel\LaravelWudelNotif\Console\Commands\CleanupSubscriptionsCommand;
 use LaravelWudel\LaravelWudelNotif\Console\Commands\PublishAssetsCommand;
+use LaravelWudel\LaravelWudelNotif\Console\Commands\UninstallCommand;
+use LaravelWudel\LaravelWudelNotif\Console\Commands\EmergencyCleanupCommand;
 
 class LaravelWudelNotifServiceProvider extends ServiceProvider
 {
@@ -53,6 +55,8 @@ class LaravelWudelNotifServiceProvider extends ServiceProvider
                 GenerateVapidKeysCommand::class,
                 CleanupSubscriptionsCommand::class,
                 PublishAssetsCommand::class,
+                UninstallCommand::class,
+                EmergencyCleanupCommand::class,
             ]);
         }
 
