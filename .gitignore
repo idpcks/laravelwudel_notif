@@ -1,16 +1,22 @@
+# ========================================
+# LaravelWudel Notif Package - .gitignore
+# ========================================
+
 # Dependencies
 /vendor/
 /node_modules/
+composer.lock
 
 # Environment files
 .env
-.env.backup
-.env.production
-.env.local
-.env.staging
-.phpunit.result.cache
+.env.*
+!.env.example
+
+# Testing & Coverage
 /coverage/
 /tests/coverage/
+.phpunit.result.cache
+.phpunit.cache/
 
 # IDE & Editor files
 /.idea/
@@ -18,6 +24,9 @@
 *.swp
 *.swo
 *~
+.project
+.settings/
+.classpath
 
 # OS generated files
 .DS_Store
@@ -27,31 +36,23 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+laravel.log
 
 # Build & Cache
 /build/
 /dist/
 *.cache
 *.tmp
+*.temp
 
-# Laravel specific
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/.idea
-/.vscode
-*.log
-.DS_Store
-Thumbs.db
-
-# Laravel specific
+# Laravel specific (for testing)
 /bootstrap/cache/
 /storage/*.key
 /storage/logs/
@@ -65,37 +66,82 @@ Thumbs.db
 
 # Composer
 composer.phar
-composer.lock
 
 # NPM/Yarn
 package-lock.json
 yarn.lock
 
-# Testing
-/coverage/
-.phpunit.cache/
-
-# IDE and Editor files
-*.swp
-*.swo
-*~
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
 
 # Temporary files
 *.tmp
 *.temp
 *.cache
 
-# Backup files
-*.bak
-*.backup
+# OS specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE specific
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Editor specific
+*.swp
+*.swo
+*~
+.project
+.settings/
+.classpath
+
+# Package specific
+# Ignore any published files that might be created during testing
+/app/Models/PushSubscription.php
+/config/laravelwudel-notif.php
+/resources/views/vendor/laravelwudel-notif/
+/public/vendor/laravelwudel-notif/
+database/migrations/*_create_push_subscriptions_table.php
+
+# Development files
+*.dev
+*.local
+*.test
+*.staging
+
+# Documentation builds
+/docs/build/
+/docs/_build/
+/docs/site/
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Database files
+*.sqlite
+*.db
+*.sql
+
+# Cache files
+.cache/
+cache/
+tmp/
+
+# Backup composer files
+composer.json.backup
+composer.json.old
+
+# Backup documentation
+CHANGELOG.md.backup
+README.md.backup
 
 AUTO_UPDATE_SETUP.md
