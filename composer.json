@@ -20,7 +20,7 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0|^12.0",
-        "idpcks/web-push": "^9.0",
+        "idpcks/laravelwudel_notif": "^9.0",
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
