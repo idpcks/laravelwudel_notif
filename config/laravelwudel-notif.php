@@ -155,6 +155,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Model Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Model class names and namespaces for push notification
+    | functionality. These should not be changed unless you
+    | have a custom implementation.
+    |
+    */
+    'models' => [
+        'push_subscription' => \LaravelWudel\LaravelWudelNotif\Models\PushSubscription::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Default Topics
     |--------------------------------------------------------------------------
     |
