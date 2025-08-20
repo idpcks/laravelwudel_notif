@@ -293,6 +293,9 @@ class GenerateVapidKeysCommand extends Command
      */
     protected function checkOpenSSLCurveSupport(): bool
     {
+        // For OpenSSL 3.0+, we'll use a different approach to check curve support
+        // We'll try to generate a key with the required curve to test support
+        
         $curves = [
             'prime256v1' => 'P-256',
             'secp384r1' => 'P-384',
@@ -300,11 +303,23 @@ class GenerateVapidKeysCommand extends Command
         ];
 
         foreach ($curves as $curveName => $curveDescription) {
-            if (!openssl_ec_curve_nist_method($curveName)) {
+            // Try to create a key pair with the curve to test support
+            $config = [
+                'private_key_type' => OPENSSL_KEYTYPE_EC,
+                'curve_name' => $curveName,
+            ];
+            
+            $res = openssl_pkey_new($config);
+            
+            if ($res === false) {
                 $this->warn("OpenSSL does not support curve: {$curveDescription} ({$curveName})");
                 return false;
             }
+            
+            // Clean up the resource
+            openssl_free_key($res);
         }
+        
         return true;
     }
 }
