@@ -1,0 +1,65 @@
+{
+    "name": "laravelwudel/laravelwudel-notif",
+    "description": "A comprehensive Laravel package for web push notifications with VAPID support (Released August 2025)",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "laravelwudel-notif",
+        "web-push",
+        "vapid",
+        "service-worker"
+    ],
+    "authors": [
+        {
+            "name": "MASDEN SOLO DEVELOPMENT",
+            "email": "mail.idpcks@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.0|^12.0",
+        "idpcks/web-push": "^9.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "phpunit/phpunit": "^10.0|^11.0",
+        "mockery/mockery": "^1.6",
+        "laravel/pint": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelWudel\\LaravelWudelNotif\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelWudel\\LaravelWudelNotif\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelWudel\\LaravelWudelNotif\\LaravelWudelNotifServiceProvider"
+            ],
+            "aliases": {
+                "PushNotification": "LaravelWudel\\LaravelWudelNotif\\Facades\\PushNotification"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "pint": "vendor/bin/pint",
+        "pint-test": "vendor/bin/pint --test"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
