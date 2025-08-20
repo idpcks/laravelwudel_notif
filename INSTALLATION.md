@@ -210,15 +210,61 @@ curl http://your-app.test/api/push/health
    - Check environment variables
    - Verify key format
 
-3. **Notifications Not Sending**
+3. **VAPID Key Generation Fails**
+   - **OpenSSL Extension Missing**: Ensure PHP OpenSSL extension is installed
+   - **OpenSSL Version**: Update to OpenSSL 1.1.1+ for better EC curve support
+   - **Permissions**: Check if PHP has write permissions to .env file
+   - **Curve Support**: Verify OpenSSL supports prime256v1 curve
+
+4. **Notifications Not Sending**
    - Check browser console for errors
    - Verify subscription is saved
    - Check VAPID configuration
 
-4. **Permission Denied**
+5. **Permission Denied**
    - Ensure HTTPS in production
    - Check browser notification settings
    - Verify user consent
+
+### VAPID Key Generation Troubleshooting
+
+If you encounter issues with `php artisan push:generate-vapid-keys`:
+
+#### Error: "OpenSSL extension is not installed"
+```bash
+# Ubuntu/Debian
+sudo apt-get install php-openssl
+
+# CentOS/RHEL
+sudo yum install php-openssl
+
+# Windows (XAMPP/WAMP)
+# Enable openssl extension in php.ini
+```
+
+#### Error: "Failed to generate VAPID keys"
+```bash
+# Check OpenSSL version
+php -r "echo OPENSSL_VERSION_TEXT;"
+
+# Check PHP extensions
+php -m | grep openssl
+
+# Verify curve support
+php -r "var_dump(openssl_ec_curve_nist_method('prime256v1'));"
+```
+
+#### Error: "VAPID keys already exist"
+```bash
+# Force regenerate keys
+php artisan push:generate-vapid-keys --force
+
+# Or manually remove from .env file and regenerate
+# Remove these lines from .env:
+# WEBPUSH_VAPID_SUBJECT=...
+# WEBPUSH_VAPID_PUBLIC_KEY=...
+# WEBPUSH_VAPID_PRIVATE_KEY=...
+```
 
 ### Debug Mode
 

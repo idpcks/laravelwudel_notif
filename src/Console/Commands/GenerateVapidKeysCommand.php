@@ -15,12 +15,12 @@ class GenerateVapidKeysCommand extends Command
         $this->info('🚀 LaravelWudel Notif - VAPID Key Generator');
         $this->line('==========================================');
 
-        // Check if keys already exist
+        // Check if keys already exist and are valid
         $envFile = base_path('.env');
         $envContent = File::exists($envFile) ? File::get($envFile) : '';
         
-        $hasExistingKeys = str_contains($envContent, 'WEBPUSH_VAPID_PUBLIC_KEY') && 
-                           str_contains($envContent, 'WEBPUSH_VAPID_PRIVATE_KEY');
+        // Check if keys exist and have actual values (not empty)
+        $hasExistingKeys = $this->hasValidExistingKeys($envContent);
 
         if ($hasExistingKeys && !$this->option('force')) {
             if (!$this->confirm('VAPID keys already exist. Do you want to overwrite them?')) {
@@ -30,13 +30,38 @@ class GenerateVapidKeysCommand extends Command
         }
 
         try {
+            // Check OpenSSL availability first
+            if (!extension_loaded('openssl')) {
+                $this->error('❌ OpenSSL extension is not installed or enabled.');
+                $this->line('Please install/enable OpenSSL extension in your PHP installation.');
+                return 1;
+            }
+
+            // Check OpenSSL version and capabilities
+            $opensslVersion = OPENSSL_VERSION_TEXT;
+            $this->info("OpenSSL Version: {$opensslVersion}");
+
+            // Check if required curves are supported
+            if (!$this->checkOpenSSLCurveSupport()) {
+                $this->error('❌ OpenSSL does not support required elliptic curves.');
+                $this->line('Required curve: prime256v1 (P-256)');
+                $this->line('Please update your OpenSSL installation.');
+                return 1;
+            }
+
             // Generate new VAPID keys
             $this->info('Generating new VAPID keys...');
             
             $keys = $this->generateVapidKeys();
             
             if (!$keys) {
-                $this->error('Failed to generate VAPID keys. Please check your OpenSSL installation.');
+                $this->error('❌ Failed to generate VAPID keys.');
+                $this->line('This might be due to:');
+                $this->line('1. OpenSSL configuration issues');
+                $this->line('2. Insufficient permissions');
+                $this->line('3. PHP OpenSSL extension problems');
+                $this->line('');
+                $this->line('Please check your OpenSSL installation and try again.');
                 return 1;
             }
 
@@ -55,9 +80,48 @@ class GenerateVapidKeysCommand extends Command
             return 0;
 
         } catch (\Exception $e) {
-            $this->error('Error generating VAPID keys: ' . $e->getMessage());
+            $this->error('❌ Error generating VAPID keys: ' . $e->getMessage());
+            $this->line('');
+            $this->line('Debug information:');
+            $this->line('- PHP Version: ' . PHP_VERSION);
+            $this->line('- OpenSSL Extension: ' . (extension_loaded('openssl') ? 'Loaded' : 'Not loaded'));
+            $this->line('- OpenSSL Version: ' . (defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'Unknown'));
             return 1;
         }
+    }
+
+    /**
+     * Check if valid VAPID keys already exist
+     */
+    protected function hasValidExistingKeys(string $envContent): bool
+    {
+        // Check if keys exist and have actual values (not empty or just whitespace)
+        $lines = explode("\n", $envContent);
+        
+        $hasPublicKey = false;
+        $hasPrivateKey = false;
+        $hasSubject = false;
+        
+        foreach ($lines as $line) {
+            $line = trim($line);
+            
+            if (str_starts_with($line, 'WEBPUSH_VAPID_PUBLIC_KEY=')) {
+                $value = trim(substr($line, strlen('WEBPUSH_VAPID_PUBLIC_KEY=')));
+                $hasPublicKey = !empty($value) && $value !== '""' && $value !== "''";
+            }
+            
+            if (str_starts_with($line, 'WEBPUSH_VAPID_PRIVATE_KEY=')) {
+                $value = trim(substr($line, strlen('WEBPUSH_VAPID_PRIVATE_KEY=')));
+                $hasPrivateKey = !empty($value) && $value !== '""' && $value !== "''";
+            }
+            
+            if (str_starts_with($line, 'WEBPUSH_VAPID_SUBJECT=')) {
+                $value = trim(substr($line, strlen('WEBPUSH_VAPID_SUBJECT=')));
+                $hasSubject = !empty($value) && $value !== '""' && $value !== "''";
+            }
+        }
+        
+        return $hasPublicKey && $hasPrivateKey && $hasSubject;
     }
 
     /**
@@ -65,37 +129,67 @@ class GenerateVapidKeysCommand extends Command
      */
     protected function generateVapidKeys(): ?array
     {
-        // Generate EC key pair
-        $config = [
-            'private_key_bits' => 256,
-            'private_key_type' => OPENSSL_KEYTYPE_EC,
-            'curve_name' => 'prime256v1'
-        ];
+        try {
+            // Generate EC key pair
+            $config = [
+                'private_key_bits' => 256,
+                'private_key_type' => OPENSSL_KEYTYPE_EC,
+                'curve_name' => 'prime256v1'
+            ];
 
-        $res = openssl_pkey_new($config);
-        if (!$res) {
+            $this->line('Creating EC key pair with curve: prime256v1');
+            
+            $res = openssl_pkey_new($config);
+            if (!$res) {
+                $this->warn('Failed to create EC key pair. OpenSSL error: ' . openssl_error_string());
+                return null;
+            }
+
+            $this->line('Extracting private key...');
+            
+            // Extract private key
+            $privateKey = '';
+            if (!openssl_pkey_export($res, $privateKey)) {
+                $this->warn('Failed to export private key. OpenSSL error: ' . openssl_error_string());
+                openssl_free_key($res);
+                return null;
+            }
+            
+            $this->line('Extracting public key...');
+            
+            // Extract public key
+            $keyDetails = openssl_pkey_get_details($res);
+            if (!$keyDetails) {
+                $this->warn('Failed to get key details. OpenSSL error: ' . openssl_error_string());
+                openssl_free_key($res);
+                return null;
+            }
+            
+            $publicKey = $keyDetails['key'];
+            
+            openssl_free_key($res);
+
+            $this->line('Converting keys to VAPID format...');
+            
+            // Convert to VAPID format
+            $vapidPublicKey = $this->convertToVapidFormat($publicKey, true);
+            $vapidPrivateKey = $this->convertToVapidFormat($privateKey, false);
+
+            if (empty($vapidPublicKey) || empty($vapidPrivateKey)) {
+                $this->warn('Failed to convert keys to VAPID format');
+                return null;
+            }
+
+            return [
+                'public_key' => $vapidPublicKey,
+                'private_key' => $vapidPrivateKey,
+                'subject' => 'mailto:' . (config('mail.from.address') ?? 'noreply@example.com')
+            ];
+            
+        } catch (\Exception $e) {
+            $this->warn('Exception during key generation: ' . $e->getMessage());
             return null;
         }
-
-        // Extract private key
-        $privateKey = '';
-        openssl_pkey_export($res, $privateKey);
-        
-        // Extract public key
-        $keyDetails = openssl_pkey_get_details($res);
-        $publicKey = $keyDetails['key'];
-        
-        openssl_free_key($res);
-
-        // Convert to VAPID format
-        $vapidPublicKey = $this->convertToVapidFormat($publicKey, true);
-        $vapidPrivateKey = $this->convertToVapidFormat($privateKey, false);
-
-        return [
-            'public_key' => $vapidPublicKey,
-            'private_key' => $vapidPrivateKey,
-            'subject' => 'mailto:' . (config('mail.from.address') ?? 'noreply@example.com')
-        ];
     }
 
     /**
@@ -192,5 +286,25 @@ class GenerateVapidKeysCommand extends Command
         
         $this->warn('⚠️  Keep your private key secure and never share it publicly!');
         $this->line('');
+    }
+
+    /**
+     * Check if required elliptic curves are supported by OpenSSL.
+     */
+    protected function checkOpenSSLCurveSupport(): bool
+    {
+        $curves = [
+            'prime256v1' => 'P-256',
+            'secp384r1' => 'P-384',
+            'secp521r1' => 'P-521',
+        ];
+
+        foreach ($curves as $curveName => $curveDescription) {
+            if (!openssl_ec_curve_nist_method($curveName)) {
+                $this->warn("OpenSSL does not support curve: {$curveDescription} ({$curveName})");
+                return false;
+            }
+        }
+        return true;
     }
 }
