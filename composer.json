@@ -23,10 +23,6 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.0|^12.0",
-<<<<<<< HEAD
-        "minishlink/web-push": "^8.0",
-=======
->>>>>>> main
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
