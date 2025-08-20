@@ -1,6 +1,6 @@
 # Installation Guide - Laravel Push Notification Package
 
-**Version:** 1.0.0 | **Last Updated:** August 20, 2025
+**Version:** 1.0.1 | **Last Updated:** January 27, 2025
 
 ## Prerequisites
 

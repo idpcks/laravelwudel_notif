@@ -7,31 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-01-27
+
 ### Added
-- Initial release of LaravelWudel Notif package
-- Web Push Notifications with VAPID support (Custom Implementation)
-- **100% Custom Code** - No external library dependencies
-- Custom VAPID key generation using OpenSSL
-- Custom web push service implementation
-- Custom JWT signing for VAPID authentication
-- Service Provider auto-discovery
-- Facade for easy usage
-- Model and Migration for push subscriptions
-- Queue support for mass notifications
-- Error handling and logging
-- Testing support
-- Console commands for VAPID key generation and subscription cleanup
-- Asset publishing for JavaScript and Service Worker files
+- Bug fixes and improvements
+- Enhanced error handling
+- Performance optimizations
 
 ### Changed
-- **Removed dependency on minishlink/web-push**
-- Implemented custom web push notification service
-- Custom branding: LaravelWudel Notif
-
-### Removed
-- Complex polymorphic relationships
-- Unused configuration options
-- Overly complex service methods
+- Package stability improvements
+- Documentation updates
 
 ## [1.0.0] - 2025-08-20
 

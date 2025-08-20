@@ -2,7 +2,7 @@
 
 Package Laravel yang komprehensif untuk web push notifications dengan dukungan VAPID.
 
-**Version:** 1.0.0 | **Release Date:** August 20, 2025
+**Version:** 1.0.1 | **Release Date:** January 27, 2025
 
 ## Fitur
 

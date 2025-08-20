@@ -1,7 +1,7 @@
 {
     "name": "laravelwudel/laravelwudel-notif",
     "description": "A comprehensive Laravel package for web push notifications with VAPID support - 100% Custom Implementation, No External Dependencies (Released August 2025)",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "library",
     "license": "MIT",
     "keywords": [
