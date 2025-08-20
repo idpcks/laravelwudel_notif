@@ -5,10 +5,9 @@
 # Environment files
 .env
 .env.backup
+.env.production
 .env.local
-.env.*.local
-
-# Testing
+.env.staging
 .phpunit.result.cache
 /coverage/
 /tests/coverage/
@@ -44,17 +43,59 @@ yarn-error.log*
 # Laravel specific
 Homestead.json
 Homestead.yaml
-.phpunit.cache/
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+*.log
+.DS_Store
+Thumbs.db
+
+# Laravel specific
+/bootstrap/cache/
+/storage/*.key
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/app/public/
+/public/hot
+/public/storage
+/public/build
 
 # Composer
 composer.phar
 composer.lock
 
+# NPM/Yarn
+package-lock.json
+yarn.lock
+
+# Testing
+/coverage/
+.phpunit.cache/
+
+# IDE and Editor files
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 # Temporary files
 *.tmp
 *.temp
+*.cache
+
+# Backup files
 *.bak
 *.backup
 
-# Documentation & Setup files
 AUTO_UPDATE_SETUP.md
