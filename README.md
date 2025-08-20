@@ -215,7 +215,7 @@ composer require laravelwudel/laravelwudel-notif
 
 ## 🚀 Custom Implementation
 
-Package ini menggunakan **100% custom implementation** tanpa bergantung pada library eksternal seperti `minishlink/web-push`. Semua fitur web push notification diimplementasikan dari awal menggunakan:
+Package ini menggunakan **100% custom implementation** Semua fitur web push notification diimplementasikan dari awal menggunakan:
 
 - **Custom VAPID Key Generation** - Generate keys menggunakan OpenSSL
 - **Custom Web Push Service** - Implementasi lengkap web push protocol
